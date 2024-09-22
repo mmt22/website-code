@@ -3,24 +3,36 @@ version: 2.1
 jobs:
   deploy:
     docker:
-      - image: circleci/python:3.7  # Use a Docker image with SSH tools installed
+      - image: circleci/python:3.7  # Use a docker image with SSH tools installed
     steps:
       - checkout  # Check out the repository
 
-      # 1. Add EC2 instance to known_hosts to avoid authenticity prompts
+      # 1. Create SSH directory
+      - run:
+          name: Create SSH Directory
+          command: mkdir -p ~/.ssh
+
+      # 2. Add SSH Private Key from the environment variable
+      - run:
+          name: Add SSH Private Key
+          command: |
+            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+
+      # 3. Add the known_hosts to prevent host verification issues
       - run:
           name: Add EC2 to Known Hosts
           command: |
             ssh-keyscan -H 100.27.229.255 >> ~/.ssh/known_hosts
 
-      # 2. Deploy HTML files and folders to the EC2 instance
+      # 4. Deploy the application to EC2
       - run:
-          name: Deploy HTML Files
+          name: Deploy to EC2
           command: |
             pwd
             ls
             scp -r ./* ubuntu@100.27.229.255:/var/www/html/
-            ssh ubuntu@100.27.229.255 'sudo systemctl restart nginx'  # Restart web server if necessary
+            ssh ubuntu@100.27.229.255 'sudo systemctl restart nginx'
 
 workflows:
   version: 2
