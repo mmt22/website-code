@@ -12,7 +12,7 @@ jobs:
           name: Create SSH Directory
           command: mkdir -p ~/.ssh
 
-      # 2. Add SSH Private Key from the environment variable
+      # 2. Add SSH Private Key from the environment variables
       - run:
           name: Add SSH Private Key
           command: |
