@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   deploy:
     docker:
-      - image: circleci/python:3.7  # Use a docker image with SSH tools installed
+      - image: cimg/python:3.8.4  # Use a docker image with SSH tools installed
     steps:
       - checkout  # Check out the repository
 
