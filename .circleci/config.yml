@@ -32,7 +32,7 @@ jobs:
             pwd
             ls
             scp -r ./* ubuntu@100.27.229.255:/var/www/html/
-            ssh ubuntu@100.27.229.255 'sudo systemctl restart nginx'
+            ssh ubuntu@100.27.229.255 'sudo systemctl restart apache2'
 
 workflows:
   version: 2
