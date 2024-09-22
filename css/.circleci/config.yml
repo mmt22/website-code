@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Deploy to EC2
           command: |
-            scp -r ./build/* ubuntu@100.27.229.255:/var/www/html/
+            scp -r ./* ubuntu@100.27.229.255:/var/www/html/
             ssh ubuntu@100.27.229.255 'sudo systemctl restart nginx'
 
 workflows:
